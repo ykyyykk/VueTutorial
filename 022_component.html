@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{name}}</h1>
+      <input type="text" v-model="name" />
+    </div>
+
+    <div id="app2">
+      <h1>{{name}}</h1>
+      <input type="text" v-model="name" />
+    </div>
+
+    <div id="app3">
+      <!-- 不要在名稱前面加 $ 會Warning 看不到 -->
+      <h1>{{ $name }}</h1>
+      <input type="text" v-model="name" />
+    </div>
+  </body>
+
+  <script>
+    const dataObj = { name: "aaa" };
+
+    const vm1 = Vue.createApp({
+      data() {
+        return { ...dataObj };
+      },
+    }).mount("#app");
+
+    //這邊更改也會改到vm2
+    //除非return時 {...dataObj} 也要注意順序 如果括號在底下則兩個都bbb
+    vm1.$data.name = "bbb";
+
+    const vm2 = Vue.createApp({
+      data() {
+        return dataObj;
+      },
+    }).mount("#app2");
+
+    Vue.createApp({
+      data() {
+        return { name: "ccc" };
+      },
+    }).mount("#app3");
+  </script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      beforeCreate() {
+        console.log("beforeCreate");
+      },
+      create() {
+        console.log("create");
+      },
+      beforeMount() {
+        console.log("beforeMount");
+      },
+      mounted() {
+        console.log("mounted");
+      },
+      beforeUpdate() {
+        console.log("beforeUpdate");
+      },
+      updated() {
+        console.log("updated");
+      },
+      beforeUnmount() {
+        console.log("beforeUnmount");
+      },
+      unmounted() {
+        console.log("unmounted");
+      },
+      errorCaptured: (err, vm, info) => {
+        console.log(err);
+        console.log(vm);
+        console.log(info);
+      },
+      activated() {
+        console.log("activated");
+      },
+      deactivated() {
+        console.log("deactivated");
+      },
+    }).mount("#app");
+  </script>
+</html>

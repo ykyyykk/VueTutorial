@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="checkbox" v-model="isShow" /> isShow: {{isShow}}
+      <p>移除或顯示</p>
+      <div v-if="isShow">v-if</div>
+      <p>隱藏或顯示</p>
+      <div v-show="isShow">v-show</div>
+    </div>
+
+    <div id="app2">
+      <div
+        v-if="count == 0"
+        style="width: 250px; height: 250px; background-color: black"
+      ></div>
+      <div
+        v-else-if="count == 1"
+        style="width: 250px; height: 250px; background-color: red"
+      ></div>
+
+      <div
+        v-else-if="count == 2"
+        style="width: 250px; height: 250px; background-color: blue"
+      ></div>
+      <button @click="change">Click</button>
+    </div>
+
+    <div id="app3">
+      <template v-if="isShow == true">
+        <h1>true</h1>
+        <h1>true</h1>
+        <h1>true</h1>
+      </template>
+      <template v-else>
+        <h1>false</h1>
+        <h1>false</h1>
+        <h1>false</h1>
+      </template>
+      <button @click="change">button</button>
+    </div>
+  </body>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          isShow: true,
+        };
+      },
+    }).mount("#app");
+    const app2 = Vue.createApp({
+      data() {
+        return {
+          count: 0,
+        };
+      },
+      methods: {
+        change() {
+          this.count++;
+          console.log(this.count);
+          this.count %= 3;
+        },
+      },
+    }).mount("#app2");
+
+    Vue.createApp({
+      data() {
+        return {
+          isShow: true,
+        };
+      },
+      methods: {
+        change() {
+          this.isShow = !this.isShow;
+        },
+      },
+    }).mount("#app3");
+  </script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body id="body">
+    <div id="click_stop">
+      <p>如果這邊click取消.stop 點擊按鈕時會連 handleOuterClick一起被觸發</p>
+      <div @click="handleOuterClick" style="border: 2px solid black">
+        <p>點擊這個區域將觸發外層的事件處理器</p>
+        <button @click.stop="handleButtonClick">點擊我</button>
+      </div>
+    </div>
+
+    <div id="click_capture">
+      <p>加上.capture後執行順序會從OuterClick再到ButtonClick</p>
+      <div @click.capture="handleOuterClick" style="border: 2px solid black">
+        <p>點擊這個區域將觸發外層的事件處理器</p>
+        <button @click="handleButtonClick">點擊我</button>
+      </div>
+    </div>
+
+    <!-- id 改放到form裡面沒作用 -->
+    <div id="prevent">
+      <p>prevent 是阻擋預設行為 所以sumbmit後資料不會被清除</p>
+      <form @submit.prevent="handleSubmit">
+        <label>Name:</label>
+        <input v-model="name" />
+        <button type="submit">送出</button>
+      </form>
+    </div>
+
+    <div id="self">
+      <p>跟stop有點像 按下按鈕後 不會執行div</p>
+      <div @click.self="handleOuterClick" style="border: 2px solid black">
+        <p>點擊這個區域將觸發事件處理器(僅限於點擊此元素本身)</p>
+        <button @click="handleButtonClick">Button</button>
+      </div>
+    </div>
+
+    <div id="once">
+      <p>只觸發一次</p>
+      <button @click.once="console.log('once')">Once</button>
+    </div>
+
+    <!-- 不好試 -->
+    <div id="passive">
+      <div @scroll.passive="onscroll"></div>
+    </div>
+  </body>
+  <script>
+    const click_stop = Vue.createApp({
+      methods: {
+        handleOuterClick() {
+          alert("stop外層區域被點擊了");
+        },
+        handleButtonClick() {
+          alert("stop按鈕被點擊了");
+        },
+      },
+    }).mount("#click_stop");
+
+    const click_capture = Vue.createApp({
+      methods: {
+        handleOuterClick() {
+          alert("capture外層區域被點擊了");
+        },
+        handleButtonClick() {
+          alert("capture按鈕被點擊了");
+        },
+      },
+    }).mount("#click_capture");
+
+    const click_prevent = Vue.createApp({
+      data() {
+        return {
+          name: "",
+        };
+      },
+      methods: {
+        handleSubmit() {
+          alert(`Submitted Name: ${this.name}`);
+        },
+      },
+    }).mount("#prevent");
+
+    const self = Vue.createApp({
+      methods: {
+        handleOuterClick() {
+          alert("外層區域被點擊了");
+        },
+        handleButtonClick() {
+          alert("self按鈕被點擊了");
+        },
+      },
+    }).mount("#self");
+
+    Vue.createApp({}).mount("#once");
+  </script>
+</html>

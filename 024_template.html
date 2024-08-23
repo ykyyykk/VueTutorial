@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    Vue.createApp({
+      // 在 Vue3.0以前 這樣不行 也不能多個 div做不同事
+      //  template: `{{greeting}} 好棒棒`,
+      // Vue3.0後 不強制加div
+      template: `<div>{{greeting}} 好棒棒</div>`,
+      data() {
+        return {
+          greeting: "aaaaa",
+        };
+      },
+    }).mount("#app");
+  </script>
+</html>

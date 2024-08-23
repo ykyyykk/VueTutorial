@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p v-bind:id="customId">aaaaaaa</p>
+      <button v-bind:disabled="isBtnDisabled">click me!</button>
+
+      <!-- v-bind:屬性名稱 id class src value 那些  -->
+      <!-- <img v-bind:src="imageSrcUrl" /> -->
+      <!-- 上面的簡寫 -->
+      <!-- <img :src="imageSrcUrl" /> -->
+    </div>
+  </body>
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          customId: "item-id-1",
+          isBtnDisabled: true,
+        };
+      },
+    }).mount("#app");
+  </script>
+</html>

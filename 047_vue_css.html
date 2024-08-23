@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <style>
+    .errorCSS {
+      border: red 1px solid;
+      color: red;
+      font-size: xx-large;
+    }
+    .testCSS {
+      color: blue;
+      font-size: xx-large;
+    }
+  </style>
+  <body>
+    <div id="error">
+      <!-- :class 是 v-bind:class簡寫 當inputMsg.length > 3 增加errorCSS class-->
+      <!-- 多個CSS class用逗號分開 class名稱要 single quote -->
+      <input
+        type="text"
+        v-model.trim="inputMsg"
+        :class="{'errorCSS': inputMsg.length > 3, 'testCSS': inputMsg.length > 0 && inputMsg.length <= 3 }"
+      />
+
+      <!-- 直接修改style -->
+      <input type="text" v-model.trim="inputMsg" :style="msgStyle" />
+    </div>
+    <script>
+      const error = Vue.createApp({
+        data() {
+          return {
+            inputMsg: "",
+          };
+        },
+        computed: {
+          isValid: function () {
+            return this.inputMsg.length <= 3;
+          },
+          msgStyle: function () {
+            return {
+              border: this.isValid ? "" : "red solid 10px",
+              // 因為-的關係所以要用quate
+              "font-size": this.isValid ? "" : "xx-large",
+              color: this.isValid ? "" : "red",
+            };
+          },
+        },
+      }).mount("#error");
+    </script>
+  </body>
+</html>

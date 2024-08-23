@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      單價: {{price}} 數量: {{amount}} 總金額數量: {{price * amount}}
+    </div>
+
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            price: 100,
+            amount: 2,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>總金額共{{ subtotal() }}</p>
+      <p>總金額共{{ subtotal1() }}</p>
+      <p>總金額共{{ subtotal1() }}</p>
+      <p>總金額共{{ subtotal2 }}</p>
+      <p>總金額共{{ subtotal2 }}</p>
+      <p>總金額共{{ subtotalComputed }}</p>
+      <p>總金額共{{ subtotalComputed }}</p>
+      <p>總金額共{{ subtotalComputed }}</p>
+      <p>總金額共{{ subtotalComputedOnlyOne }}</p>
+      <p>總金額共{{ subtotalComputedOnlyOne }}</p>
+      <p>總金額共{{ subtotalComputedOnlyOne }}</p>
+      <p>總金額共{{ subtotalMethods() }}</p>
+      <p>總金額共{{ subtotalMethods() }}</p>
+      <p>總金額共{{ subtotalMethods() }}</p>
+    </div>
+  </body>
+
+  <script>
+    var vm = Vue.createApp({
+      data() {
+        return {
+          price: 100,
+          amount: 10,
+        };
+      },
+      methods: {
+        // 利用arrowfunction ()=> 會將this 只性window
+        // 一定要用function 不然數值是NaN
+        // 就算用+ 或是 Number去包也一樣
+        subtotal: function () {
+          return this.price * this.amount;
+        },
+
+        // 或者也可以這樣呼叫
+        subtotal1() {
+          console.log(1111);
+          return this.price * this.amount;
+        },
+
+        // 呼叫幾次就會出現幾次log 會將計算結果儲存 如果沒更新就不會重複被執行
+        // 但就算更新內容 與return不相關 也會重複執行
+        subtotalMethods() {
+          console.log("methods");
+          // return this.price * this.amount;
+          return 100 * 10;
+        },
+      },
+
+      // 有點像c#的property
+      // 使用時 不需要加入小括號
+      // 如果多重呼叫 只會出現一次log 會將計算結果儲存 如果沒更新就不會重複被執行
+      // 沒辦法使用參數
+      computed: {
+        subtotal2: function () {
+          return this.price * this.amount;
+        },
+
+        subtotalComputed() {
+          console.log("computed");
+          return this.price * this.amount;
+        },
+
+        subtotalComputedOnlyOne() {
+          console.log("subtotalComputedOnlyOne");
+          return 100 * 10;
+        },
+      },
+    }).mount("#app");
+
+    vm.$data.price = 10;
+  </script>
+</html>

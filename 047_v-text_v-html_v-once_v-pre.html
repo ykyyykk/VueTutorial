@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="v-text">
+      <!-- 只出現Hello -->
+      <div v-text="text">World</div>
+      <!-- Hello World -->
+      <div>{{text}} World</div>
+    </div>
+
+    <div id="v-html">
+      <!-- 顯示"<h1>Hello</h1>"的字串 -->
+      <div v-text="html"></div>
+      <!-- 顯示h1的Hello -->
+      <div v-html="html"></div>
+    </div>
+
+    <div id="v-once">
+      <input v-model="once" />
+      <div>div {{once}}</div>
+      <!-- 只會讀取一次 所以在v_once初始化設定後 就不能更改了 -->
+      <div v-once>v-once div {{once}}</div>
+    </div>
+
+    <div id="v-pre">
+      <!-- 當我們就是想要兩個大括號 不想被vue改變 就加v-pre -->
+      <div v-pre>{{pre}}</div>
+      <div>{{pre}}</div>
+    </div>
+  </body>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          text: "Hello",
+        };
+      },
+    }).mount("#v-text");
+
+    Vue.createApp({
+      data() {
+        return {
+          html: "<h1>Hello</h1>",
+        };
+      },
+    }).mount("#v-html");
+
+    const v_once = Vue.createApp({
+      data() {
+        return {
+          once: "sssss",
+        };
+      },
+    }).mount("#v-once");
+
+    const v_pre = Vue.createApp({
+      data() {
+        return {
+          pre: "v-preeeeeeeeeee",
+        };
+      },
+    }).mount("#v-pre");
+  </script>
+</html>

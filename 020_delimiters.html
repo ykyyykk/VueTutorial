@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      名稱: {{name}} 單價: {{price}} 數量: %{amount}% 總金額數量: {{price *
+      amount}}
+    </div>
+
+    <script>
+      const vm = Vue.createApp({
+        // 將原本{{ }} 改用%{}% 如果語法衝突的話 有可能會因為瀏覽器衝突
+        //    delimiters: ["%{", "}%"],
+        data() {
+          return {
+            name: "banana",
+            price: 100,
+            amount: 2,
+          };
+        },
+      });
+
+      // vue生命週期https://book.vue.tw/CH1/1-7-lifecycle.html
+      // 跟下面的一樣 做法不一樣
+      const mountInstance = vm.mount("#app");
+      mountInstance.$data.name = "orange";
+      mountInstance.$data.price = 1;
+
+      //會先執行這邊在用mount 將資料顯示
+      //如果不創建mountInstance直接mount時才有用
+      vm.$data.name = "tomato";
+      vm.$data.price = 999;
+    </script>
+  </body>
+</html>

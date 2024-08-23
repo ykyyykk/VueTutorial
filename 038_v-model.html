@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <!-- 只有輸入類型的標籤才能使用v-model 例如input checkbox -->
+    <!-- div span img p 等等都不行 -->
+    <div id="inputText">
+      <!-- 自動綁定input事件 -->
+      <input
+        v-model="message"
+        type="text"
+        placeholder="Edit me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      />
+      <textarea
+        v-model="message"
+        type="text"
+        placeholder="edit multi line here"
+      ></textarea>
+      <p>message is: {{message}}</p>
+    </div>
+
+    <div id="radio">
+      <!-- radio在設定v-model一定要設定value 不然只會單純傳 on off 而且變多選-->
+      <input type="radio" id="one" value="1" v-model="picked" />
+      <label for="one">One</label>
+      <input type="radio" id="two" value="xxxxxx" v-model="picked" />
+      <label for="two">Two</label>
+      <div>Picked: {{picked}}</div>
+    </div>
+
+    <div id="checkbox">
+      <!-- checkbox 也一定要設定value v-model名稱也要設定一樣-->
+      <input type="checkbox" value="Jack" v-model="checkedName" />
+      <label for="jack">JackLabel</label>
+      <input type="checkbox" value="John" v-model="checkedName" />
+      <label for="john">JohnLabel</label>
+      <input type="checkbox" value="Mike" v-model="checkedName1" />
+      <label for="mike">MikeLabel</label>
+      <input type="checkbox" value="Mary" v-model="checkedName1" />
+      <label for="mary">MaryLabel</label>
+      <div>CheckedName: {{checkedName}}</div>
+    </div>
+
+    <div id="isChecked">
+      <input type="checkbox" id="checkbox" v-model="isChecked" />
+      <label for="checkbox">Status: {{isChecked}}</label>
+    </div>
+
+    <div id="dropdown">
+      <select v-model="selected">
+        <!-- 因為ios系統中第一個選項不能選 所以加了一個人不能選的選項 -->
+        <option disabled value="">請選擇</option>
+        <option value="台北市">台北市</option>
+        <option value="基隆市">基隆市</option>
+        <option value="新北市">新北市</option>
+      </select>
+
+      <p>Select: {{selected || "未選擇"}}</p>
+    </div>
+  </body>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          message: "Hello",
+        };
+      },
+    }).mount("#inputText");
+
+    const vm2 = Vue.createApp({
+      data() {
+        return {
+          picked: 1,
+        };
+      },
+    }).mount("#radio");
+
+    const vm3 = Vue.createApp({
+      data() {
+        return {
+          // 任一checkbox按下去後 全部都會一起按 checkedName == true
+          // checkedName: this.checkedName,
+
+          // 因為是複選的關係
+          checkedName: [],
+        };
+      },
+    }).mount("#checkbox");
+
+    Vue.createApp({
+      data() {
+        return {
+          isChecked: false,
+        };
+      },
+    }).mount("#isChecked");
+
+    Vue.createApp({
+      data() {
+        return {
+          selected: "",
+        };
+      },
+    }).mount("#dropdown");
+  </script>
+</html>

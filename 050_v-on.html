@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <style>
+    .big {
+      font-size: xx-large;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <p><input v-model.number="amount" type="text" /></p>
+      <p>Count: {{count}}</p>
+
+      <p>可以直接做運算</p>
+      <button v-on:click="count++">Plus</button>
+
+      <p>註冊methods</p>
+      <button v-on:click="Add()">PlusMethodsWithBrackets</button>
+
+      <p>就算是methods 也可以不用加括號</p>
+      <button v-on:click="Add">PlusMethodsWithNoBrackets</button>
+
+      <p>v-on的簡寫是@</p>
+      <button @:click="Add">PlusMethods簡寫</button>
+
+      <p>增加指定數量 $是為了把原本的event帶入進去</p>
+      <button @:click="Plus(amount,$event)">AddAmount</button>
+
+      <p>不是用hover 用mouseenter</p>
+      <p>未指定傳入的參數 預設為Event</p>
+      <button
+        @:mouseenter="MouseEnter"
+        @:mouseleave="MouseLeave"
+        :class="{'big': mouseenter}"
+      >
+        hoverEvent
+      </button>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          amount: 0,
+          count: 0,
+          mouseenter: false,
+        };
+      },
+      methods: {
+        Add() {
+          this.count++;
+        },
+        Plus(amount, event) {
+          console.log(event.target.tagName);
+          this.count += amount;
+        },
+        MouseEnter(event) {
+          this.mouseenter = true;
+        },
+        MouseLeave(event) {
+          this.mouseenter = false;
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

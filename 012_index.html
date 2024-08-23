@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app" class="app">{{message}}</div>
+    <div id="app" class="app">{{message}}</div>
+    <script src="http://unpkg.com/vue@3"></script>
+
+    <script>
+      //  //Composistion API Style
+      //  // V要大寫
+      //  const { createApp, ref } = Vue;
+      //  const vm = createApp({
+      //    setup() {
+      //      const message = ref("aaaa");
+      //      return { message };
+      //    },
+      //  });
+      //  vm.mount("#app");
+      //  //vm 2.0這樣寫 3.0不支援
+      //  //  vm.$mount("#app");
+
+      //  //Options-base API Style
+      //  const vm1 = Vue.createApp({
+      //    data() {
+      //      return { message: "bbb" };
+      //    },
+      //  });
+      //  vm1.mount("#app");
+
+      Vue.createApp({
+        data() {
+          return { message: "cccc" };
+        },
+      }).mount(".app");
+      //不管id class tagName 都只會抓一個
+    </script>
+  </body>
+</html>

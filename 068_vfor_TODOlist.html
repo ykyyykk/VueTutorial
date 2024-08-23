@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="TODOList">
+      <h1>TODO</h1>
+      <ul>
+        <!-- 沒有加:key="i.id" 用i.title也行 從上往下切換時會顯示錯誤 -->
+        <!-- 但如果title 或 id 有重複也不適合 -->
+        <li v-for="i in GetTODOList" :key="i.title">
+          <label
+            ><input v-model="i.isDone" type="checkbox" /> {{i.title}}</label
+          >
+        </li>
+      </ul>
+      <h1>DONE</h1>
+      <ul>
+        <li v-for="i in GetDoneList" :key="i.title">
+          <label>
+            <input v-model="i.isDone" type="checkbox" />{{i.title}}</label
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
+
+  <script>
+    const TODOList = Vue.createApp({
+      data() {
+        return {
+          lists: [
+            {
+              id: "task1",
+              title: "option1",
+              isDone: false,
+            },
+            {
+              id: "task2",
+              title: "option2",
+              isDone: true,
+            },
+            {
+              id: "task3",
+              title: "option3",
+              isDone: false,
+            },
+          ],
+        };
+      },
+      computed: {
+        GetTODOList() {
+          return this.lists.filter((item) => !item.isDone);
+        },
+        GetDoneList() {
+          return this.lists.filter((item) => item.isDone);
+        },
+      },
+    }).mount("#TODOList");
+  </script>
+</html>

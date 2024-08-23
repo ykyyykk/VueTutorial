@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div class="enterKeydown">
+      <p>.meta 在windows 對應window鍵</p>
+      <p>.meta 在mac 對應command鍵</p>
+      <p>.page-down 中間需要-</p>
+      <p>避免 enter + shift 觸發 可以用.exact 因為enter觸發</p>
+      <input
+        type="text"
+        placeholder="輸入任意"
+        v-model.trim="message"
+        @keydown.enter.exact="addToMessage"
+      />
+    </div>
+
+    <!-- 應該不支援觸控板 滑鼠左鍵 -->
+    <div
+      id="mouseClick"
+      style="background-color: red; width: 500px; height: 500px"
+      @click="mouseClick"
+    ></div>
+  </body>
+  <script>
+    const enterKeydown = Vue.createApp({
+      data() {
+        return {
+          message: "",
+        };
+      },
+      methods: {
+        addToMessage() {
+          alert(this.message);
+        },
+      },
+    }).mount(".enterKeydown");
+
+    const mouseClick = Vue.createApp({
+      mounted() {
+        console.log("Vue app mounted");
+      },
+      methods: {
+        mouseClick() {
+          console.log("Click");
+        },
+      },
+    }).mount("#mouseClick");
+  </script>
+</html>

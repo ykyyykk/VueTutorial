@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 3 計算機</title>
+
+    <script src="http://unpkg.com/vue@3"></script>
+    <style>
+      .calculator {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        text-align: center;
+      }
+      .display {
+        font-size: 2em;
+        margin-bottom: 20px;
+        height: 50px;
+        line-height: 50px;
+        background-color: #f1f1f1;
+        padding: 0 10px;
+      }
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .button {
+        font-size: 1.5em;
+        padding: 20px;
+        cursor: pointer;
+      }
+      .button.operator {
+        background-color: #f9a825;
+        color: white;
+      }
+      .button.equals {
+        background-color: #388e3c;
+        color: white;
+      }
+      .button.clear {
+        background-color: #d32f2f;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="calculator">
+      <div class="display">{{displayText}}</div>
+      <div class="buttons">
+        <button @:click="setNumber(7)" class="button">7</button>
+        <button @:click="setNumber(8)" class="button">8</button>
+        <button @:click="setNumber(9)" class="button">9</button>
+        <button @:click="setOperator('/')" class="button operator">/</button>
+
+        <button @:click="setNumber(4)" class="button">4</button>
+        <button @:click="setNumber(5)" class="button">5</button>
+        <button @:click="setNumber(6)" class="button">6</button>
+        <button @:click="setOperator('*')" class="button operator">*</button>
+
+        <button @:click="setNumber(1)" class="button">1</button>
+        <button @:click="setNumber(2)" class="button">2</button>
+        <button @:click="setNumber(3)" class="button">3</button>
+        <button @:click="setOperator('-')" class="button operator">-</button>
+
+        <button class="button">0</button>
+        <button @:click="setNumber('.')" class="button">.</button>
+        <button @:click="calculate()" class="button equals">=</button>
+        <button @:click="setOperator('+')" class="button operator">+</button>
+
+        <button @:click="setClear()" class="button clear">C</button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    var vm = Vue.createApp({
+      data() {
+        return {
+          firstNum: "",
+          secondNum: "",
+          displayText: "0",
+          operator: "",
+          point: false,
+        };
+      },
+      methods: {
+        setNumber(num) {
+          if (num == ".") {
+            if (this.point) {
+              return;
+            }
+            this.point = true;
+          }
+          this.displayText =
+            this.displayText == 0 ? num : this.displayText + num.toString();
+
+          console.log(`operator ${this.operator}`);
+
+          if (this.operator) {
+            console.log(this.displayText);
+            this.secondNum = this.displayText;
+          } else {
+            console.log(this.displayText);
+            this.firstNum = this.displayText;
+          }
+        },
+        setOperator(operator) {
+          console.log(operator);
+          this.operator = operator;
+          this.displayText = 0;
+        },
+        setClear() {
+          (this.secondNum = ""), (this.displayText = "0"), (this.operator = "");
+        },
+        calculate() {
+          if (this.operator == "") {
+            console.log("this.operator == ''");
+            return;
+          }
+
+          var result = 0;
+          switch (this.operator) {
+            case "+":
+              result = Number(this.firstNum) + this.secondNum;
+              break;
+            case "-":
+              result = Number(this.firstNum) - this.secondNum;
+              break;
+            case "*":
+              result = Number(this.firstNum) * this.secondNum;
+              break;
+            case "/":
+              result = Number(this.firstNum) / this.secondNum;
+              break;
+          }
+
+          this.firstNum = result;
+          this.secondNum = "0";
+          this.operator = "";
+
+          this.displayText = result;
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

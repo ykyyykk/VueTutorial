@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header-component></header-component>
+      <menu-component></menu-component>
+      <main-component></main-component>
+      <footer-component></footer-component>
+      <my-component></my-component>
+      <my-component></my-component>
+      <aaa-component></aaa-component>
+      <bbb-component></bbb-component>
+    </div>
+  </body>
+  <script>
+    import cccComponent from "./components/cccComponent.js";
+
+    const app = Vue.createApp({
+      components: {
+        "aaa-component": {
+          template: "<div>aaa</div>",
+        },
+        "bbb-component": {
+          template: "<div>bbb</div>",
+        },
+      },
+    });
+
+    app.component("my-component", {
+      //裡面的內容跟之前的都一樣 data methods computed
+      template: `<div>Hello</div>`,
+    });
+
+    //還有以下這些功能 但書上沒寫說幹嘛的 打開會Error
+    //     app.use();
+    //     app.mixin();
+    //     app.directive();
+
+    app.mount("#app");
+  </script>
+</html>

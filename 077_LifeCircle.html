@@ -15,19 +15,19 @@
         console.log("beforeCreate");
       },
       create() {
-        console.log("create");
+        console.log("create"); //Awake
       },
       beforeMount() {
         console.log("beforeMount");
       },
       mounted() {
-        console.log("mounted");
+        console.log("mounted"); //start
       },
       beforeUpdate() {
         console.log("beforeUpdate");
       },
       updated() {
-        console.log("updated");
+        console.log("updated"); //update
       },
       beforeUnmount() {
         console.log("beforeUnmount");
@@ -46,6 +46,11 @@
       deactivated() {
         console.log("deactivated");
       },
-    }).mount("#app");
+    });
+
+    app.mount("#app");
+
+    //在沒有分離mount 呼叫app.unmount() 會error
+    app.unmount();
   </script>
 </html>

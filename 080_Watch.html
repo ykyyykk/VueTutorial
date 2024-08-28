@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://unpkg.com/vue@3"></script>
+    <style>
+      #app {
+        display: block;
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: 1rem 0;
+      }
+
+      .messages {
+        padding: 6px 10px;
+        width: 92%;
+        height: 4.5rem;
+        margin-bottom: 1rem;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+      }
+
+      input[type="text"] {
+        width: 93%;
+        height: 1.2rem;
+        padding: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="messages">
+        <div v-for="m in messages">{{m}}</div>
+      </div>
+
+      <input type="text" v-model.trim="msg" @keydown.enter="addToMessages" />
+    </div>
+  </body>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          msg: "",
+          messages: ["hello", "vue.js", "好棒棒"],
+        };
+      },
+      //不能跟addToMessages一起用的樣子 底下會Error
+      //  watch: {
+      //    msg(val, oldValue) {
+      //      console.log(`新的msg: ${val}`);
+      //      console.log(`舊的msg: ${oldValue}`);
+      //    },
+      //  },
+      methods: {
+        addToMessages() {
+          this.messages.push(this.msg);
+          this.msg = "";
+
+          // // 會因為輸入完成後還沒scrolltop更新的比 messages更新還快
+          // const el = document.querySelector(".messages");
+          // // 將el.scrollTop指定為捲軸的高度el.scrollHeight
+          // el.scrollTop = el.scrollHeight;
+
+          // 即時更新
+          this.$nextTick(() => {
+            //書上騙人 不要用這個
+            //   const el = this.$el.querySelector(".messages");
+            const el = document.querySelector(".messages");
+            el.scrollTop = el.scrollHeight;
+          });
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

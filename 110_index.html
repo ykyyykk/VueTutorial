@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <!-- 看不懂這一篇在供三小 -->
+    <div id="app" style="border: 10px solid black">
+      <none-class-component
+        :class="className"
+        @click="greeting"
+        style="border: 1px solid blue; width: 50px"
+      ></none-class-component>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          className: "block",
+        };
+      },
+      methods: {
+        greeting() {
+          console.log("aaaa");
+        },
+      },
+    });
+
+    app.component("none-class-component", {
+      template: `<div class="child-app">aaaaa</div>
+      `,
+    });
+
+    app.mount("#app");
+  </script>
+</html>

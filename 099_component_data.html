@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <abc-component></abc-component>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({});
+
+    //跟底下兩個擇一
+    //這邊要加- 沒加會error
+    app.component("abc-component", {
+      template: `
+              <div class="data-block">
+                   <div>Count: {{count}}</div>
+                   <button @click="count++">Plus</button>
+                   </div>
+              `,
+      //避免data互相污染 所以寫在template裡面
+      data: () => ({ count: 0 }),
+    });
+
+    //或是採用ES6 function寫法 只差在data裡面有沒有return
+    //     app.component("abc-component", {
+    //       template: `
+    //           <div class="data-block">
+    //             <div>Count: {{count}}</div>
+    //             <button @click="count++">Plus</button>
+    //           </div>
+    //         `,
+    //       data() {
+    //         return { count: 0 };
+    //       },
+    //     });
+
+    app.mount("#app");
+  </script>
+</html>

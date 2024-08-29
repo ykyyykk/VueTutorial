@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h3>{{msg}}</h3>
+      <!-- 這邊的parent-msg == template裡面的parentMsg -->
+      <!-- 但是如果改成parentMsg template裡面的parentMsg反而讀不到 詭異的情況 -->
+      <!-- 當你使用 :parentMsg="msg" 時，由於 HTML 屬性名稱是不區分大小寫的，HTML 會將 parentMsg 視為 parentmsg，這導致 Vue 無法將其對應到 JavaScript 中的 parentMsg。 -->
+      <!-- 這裡的msg 是data裡面的msg -->
+      <aaa-component
+        :parent-msg="msg"
+        :props1="props1"
+        :props2="props2"
+      ></aaa-component>
+    </div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          msg: "這是外層元件的msg",
+          props1: true,
+          props2: -1,
+        };
+      },
+    });
+
+    app.component("aaa-component", {
+      template: `
+     <div >
+          <div>從 props 來的 parentMsg ==> {{parentMsg}}</div>
+          <div>props1 ==> {{props1}}</div>
+          <div>props2 ==> {{props2}}</div>
+          </div>`,
+
+      //props 用法一
+      //  props: ["parentMsg", "props1", "props2"],
+
+      //props 用法二
+      props: {
+        parentMsg: {
+          //只允許String 但還是會過 只是會有warning 把上面的"這是外層元件的msg" 改成數字可測試
+          type: String,
+          //當msg:"這是外層元件的msg"不存在時 才會使用
+          default: "aaaaaaaaaaaaaaaaa",
+        },
+        props1: {
+          type: Boolean,
+          //是否必須存在 如果沒有會Error
+          required: true,
+        },
+        //允許 string number傳入
+        props2: {
+          type: [String, Number],
+          // 和指定type一樣 還是會過 只是會warning
+          validator: (value) => value > 0,
+        },
+      },
+
+      data() {
+        return {
+          msg: `這是子元件的msg`,
+        };
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</html>

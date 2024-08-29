@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue 3 全域元件 vs 區域元件範例</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app1">
+      <!-- 使用全域元件 TaskList 在不同的模板中 -->
+      <header-component></header-component>
+
+      <footer-component></footer-component>
+      <task-list></task-list>
+    </div>
+    <br />
+    <br />
+    <div id="app2">
+      <!-- 區域元件 -->
+      <head1><task></task></head1>
+      <task></task>
+      <task1></task1>
+    </div>
+
+    <script>
+      // 定義全域元件 TaskListComponent
+      const taskListComponent = {
+        template: `<div>我是內容元件：taskListComponent</div>`,
+      };
+
+      // 定義全域元件 headerComponent, 裡面套用taskListComponent，成功，因為是global
+      const headerComponent = {
+        template: `<div>我是開頭元件：headerComponent<task-list></task-list></div>`,
+      };
+
+      // 定義全域元件
+      const footerComponent = {
+        template: `<div>我是結尾元件：footerComponent</div>`,
+      };
+
+      // 創建第一個應用並全域註冊多個元件
+      const app1 = Vue.createApp({});
+      app1.component("task-list", taskListComponent);
+      app1.component("header-component", headerComponent);
+      app1.component("footer-component", footerComponent);
+
+      // 掛載第一個 Vue 應用
+      app1.mount("#app1");
+
+      //////////////////////////////////////////////////////////////////////////////////////
+
+      // 定義一個區域元件 TaskComponent
+      const taskComponent = {
+        template: `<div>app2的內容元件</div>`,
+      };
+
+      // 定義一個區域元件 headComponent   前面的<head1><task></task></head1>叫不到東西
+      const headComponent = {
+        template: `<div>app2的開頭元件</div>`,
+      };
+
+      //自己定義區域元件自己用
+      const taskComponent1 = {
+        template: `
+                <div>
+                    <h2>這是 app2 的主要內容部分</h2>
+                    <sub-component1></sub-component1>
+                    <sub-component2></sub-component2>
+                </div>
+            `,
+        components: {
+          "sub-component1": {
+            template: `<p>這是第一個子元件的內容</p>`,
+          },
+          "sub-component2": {
+            template: `<p>這是第二個子元件的內容<head1></head1></p>`,
+          },
+        },
+      };
+
+      // 創建第二個應用，並在其中區域註冊元件
+      const app2 = Vue.createApp({
+        components: {
+          head1: headComponent,
+          task: taskComponent,
+          task1: taskComponent1,
+        },
+      });
+      app2.mount("#app2");
+    </script>
+  </body>
+</html>

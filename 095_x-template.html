@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <media-block></media-block>
+    </div>
+  </body>
+
+  <!-- 定義template -->
+  <script type="text/x-template" id="media-block">
+    <div class= "media">
+         <div class="media-body">
+              <h5>aaaa</h5>
+              <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente dolor consequuntur quasi placeat cumque illum repellendus. Provident illo iure, dolorum quia in quisquam ipsa possimus et, unde suscipit cum quibusdam?</div>
+         </div>
+    </div>
+  </script>
+
+  <script>
+    const vm = Vue.createApp({});
+    vm.component("media-block", {
+      template: "#media-block",
+    });
+    vm.mount("#app");
+  </script>
+</html>

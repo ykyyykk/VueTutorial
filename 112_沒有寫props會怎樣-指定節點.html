@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js 非 Prop 屬性傳遞範例</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+      .block {
+        background-color: lightblue;
+        padding: 10px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 使用 v-bind 傳遞 className 屬性到子元件 -->
+      <!-- 結果直接被template覆蓋不見 -->
+      <my-component :class="className">結果</my-component>
+    </div>
+
+    <script>
+      // 創建 Vue 應用
+      const app = Vue.createApp({
+        data() {
+          return {
+            className: "block",
+          };
+        },
+      });
+
+      // 註冊子元件，顯示並繼承 $attrs 屬性
+      app.component("my-component", {
+        template: `
+                <div class='child-app'>
+                    這是子元件1內容
+                </div>
+                <div class='child-app' v-bind='$attrs'>
+                    這是子元件2內容
+                </div>
+                <div class='child-app'>
+                    這是子元件3內容
+                </div>
+            `,
+      });
+
+      // 掛載應用
+      app.mount("#app");
+    </script>
+  </body>
+</html>

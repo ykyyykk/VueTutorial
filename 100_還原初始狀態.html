@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Vue.js Reset Data Example</title>
+    
+</head>
+<body>
+    <div id="app">
+        <h1>用戶註冊表單</h1>
+        <form @submit.prevent="handleSubmit">
+            <div>
+                <label for="name">姓名：</label>
+                <input type="text" v-model="name" id="name">
+            </div>
+            <div>
+                <label for="email">電子郵件：</label>
+                <input type="email" v-model="email" id="email">
+            </div>
+            <div>
+                <label for="age">年齡：</label>
+                <input type="number" v-model="age" id="age">
+            </div>
+            <div>
+                <button type="submit">提交</button>
+                <button type="button" @click="resetData">重置</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    name: '',
+                    email: '',
+                    age: null
+                };
+            },
+            methods: {
+                handleSubmit() {
+                    alert(`提交的信息：\n姓名：${this.name}\n電子郵件：${this.email}\n年齡：${this.age}`);
+                },
+                resetData() {
+                    // 重置 data 屬性到初始狀態
+                    Object.assign(this.$data, this.$options.data());
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

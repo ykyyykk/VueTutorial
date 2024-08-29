@@ -1,0 +1,70 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <list-component></list-component>
+    </div>
+  </body>
+
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  沒做完
+  <script>
+    const sum = ref(0);
+    const plus = () => sum.value++;
+    const reset = () => (sum.value = 0);
+
+    const app = createApp({
+      setup() {
+        return {
+          sum,
+          plus,
+        };
+      },
+    });
+
+    app.component("button-counter", {
+      template: `<button @click="plus">you clicked me {{count}}</button>`,
+      setup(props, { emit }) {
+        const count = ref(0);
+        const plus = () => {
+          count.value++;
+          emit("add-sum");
+        };
+        watch(sum, (v) => (count.value = v == 0 ? 0 : count.value));
+
+        return {
+          count,
+          plus,
+        };
+      },
+    });
+
+    app.component("button-reset", {
+      template: `<button @click="reset">reset</button>`,
+      setuup() {
+        return {
+          reset,
+        };
+      },
+    });
+
+    app.mount("app");
+  </script>
+</html> -->

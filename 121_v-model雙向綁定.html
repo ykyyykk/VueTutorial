@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{message}}</h1>
+      <aaa-component v-model="message"></aaa-component>
+      <!-- 在:xxx的情況下做到跟上面一樣的效果 modelValue全部改成xxx 但是上面就會壞掉-->
+      <!-- <aaa-component :xxx="message"></aaa-component> -->
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "hello vue",
+        };
+      },
+      methods: {
+        aaa(val) {
+          console.log(val);
+          this.message = val;
+        },
+      },
+    });
+    app
+      .component("aaa-component", {
+        props: ["modelValue"],
+        template: `
+    <input
+      type="text"
+      :value="modelValue"
+      @input="$emit('update:modelValue',$event.target.value)"
+    />`,
+      })
+      .mount("#app");
+  </script>
+</html>

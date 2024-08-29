@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <list-component></list-component>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "hello vue",
+        };
+      },
+      provide() {
+        return {
+          provideMsg: this.message,
+          provideMsg2: Vue.computed(() => this.message),
+        };
+      },
+    });
+
+    app.component("list-component", {
+      template: `<ul>
+          <li v-for="i in 3">
+               {{i}}
+               <list-item/>
+          </li>
+     </ul>`,
+      components: {
+        "list-item": {
+          // 找尋app裡面的provide 裡有沒有 provideMsg
+          inject: ["provideMsg", "provideMsg2"],
+          //去抓inject的provideMsg
+          template: `
+          <div>provideMsg: {{provideMsg}}!</div>
+          <div>provideMsg2: {{provideMsg2}}!</div>
+          `,
+          //書上是抓provideMsg2.value不要理他
+        },
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>

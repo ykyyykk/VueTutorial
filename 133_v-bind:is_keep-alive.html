@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 那個class其實是style 做好命名為tab-button 放到class裡面-->
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        :class="['tab-button',{
+          active: currentTab==tab
+     }]"
+        @click="currentTab = tab"
+      >
+        {{tab}}
+      </button>
+
+      <!-- <tab-home v-if="currentTab == 'Home'"></tab-home>
+      <tab-posts v-if="currentTab == 'Posts'"></tab-posts>
+      <tab-archive v-if="currentTab == 'Archive'"></tab-archive> -->
+
+      <!-- keep-alive是為了讓app3 在輸入匡修改的字 在按下button切換後 不會重置為tab-name -->
+      <keep-alive>
+        <component :is="currentTabComponent"></component>
+      </keep-alive>
+    </div>
+  </body>
+
+  <script>
+    //     const app = Vue.createApp({
+    //       data() {
+    //         return {
+    //           currentTab: "Home",
+    //           tabs: ["Home", "Posts", "Archive"],
+    //         };
+    //       },
+    //     });
+
+    //     app.component("tab-home", {
+    //       template: `<div class="demo-tab">Home component</div>`,
+    //     });
+    //     app.component("tab-posts", {
+    //       template: `<div class="demo-tab">Posts component</div>`,
+    //     });
+    //     app.component("tab-archive", {
+    //       template: `<div class="demo-tab">Archive component</div>`,
+    //     });
+
+    //     app.mount("#app");
+
+    //     第二種做法 在HTML就可以少寫三個component
+    //     const app1 = Vue.createApp({
+    //       data() {
+    //         return {
+    //           currentTab: "Home",
+    //           tabs: ["Home", "Posts", "Archive"],
+    //         };
+    //       },
+    //       computed: {
+    //         currentTabComponent() {
+    //           return `tab-${this.currentTab.toLowerCase()}`;
+    //         },
+    //       },
+    //     });
+
+    //     app1.component("tab-home", {
+    //       template: `<div class="demo-tab">Home component</div>`,
+    //     });
+    //     app1.component("tab-posts", {
+    //       template: `<div class="demo-tab">Posts component</div>`,
+    //     });
+    //     app1.component("tab-archive", {
+    //       template: `<div class="demo-tab">Archive component</div>`,
+    //     });
+
+    //     app1.mount("#app");
+
+    const app2 = Vue.createApp({
+      data() {
+        return {
+          currentTab: "Home",
+          tabs: ["Home", "Posts", "Archive"],
+        };
+      },
+      computed: {
+        currentTabComponent() {
+          return `tab-${this.currentTab.toLowerCase()}`;
+        },
+      },
+    });
+
+    app2.component("tab-home", {
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({ title: "Home component" }),
+    });
+    app2.component("tab-posts", {
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({ title: "Posts component" }),
+    });
+    app2.component("tab-archive", {
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({ title: "Archive component" }),
+    });
+
+    app2.mount("#app");
+  </script>
+</html>

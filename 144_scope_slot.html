@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- h1是Parent -->
+      <h1>{{msg}}</h1>
+
+      <!-- 根據template顯示不同內容 -->
+      <!-- <custom-component>aaaa {{msg}}</custom-component> -->
+
+      <custom-component></custom-component>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          msg: "Parent",
+        };
+      },
+    });
+
+    // 如果改成CustomComponent不會顯示任何東西
+    app.component("custom-component", {
+      //會讓custom-component裡面的東西被Hello覆蓋掉
+      //  template: `<div>Hello</div>`,
+
+      //slot裡面放任何東西都沒用 會拿html上面的內容取代slot
+      //如果custom-component裡面沒有任何東西 則顯示slot裡面的內容
+      template: `<div>
+            Hello
+            <div>
+               bbb
+               msg: {{ msg }}
+                 <slot>slot</slot>
+            </div>
+ccc
+            </div>`,
+      data() {
+        return {
+          msg: "Child",
+        };
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</html>

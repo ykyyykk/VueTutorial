@@ -1,0 +1,46 @@
+<DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <script src="https://unpkg.com/vue@3"></script>
+    </head>
+    <body>
+      <div id="app">
+        <button @click="showA = true">ShowA</button>
+        <button @click="showB = true">ShowB</button>
+
+        <teleport to="#modals">
+          <div v-if="showA">
+            A
+            <button @click="showA = false">HideA</button>
+          </div>
+        </teleport>
+
+        <teleport to="#modals">
+          <div v-if="showB">
+            B
+            <button @click="showB = false">HideB</button>
+          </div>
+        </teleport>
+      </div>
+
+      <div id="modals"></div>
+    </body>
+
+    <script>
+      // 看不懂teleport是做什麼用的
+      const app = Vue.createApp({
+        data() {
+          return {
+            showA: false,
+            showB: false,
+          };
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </html>
+</DOCTYPE>

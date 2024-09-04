@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js v-for 練習</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <form @submit.prevent="HandleSubmit">
+        <label>姓名:</label>
+        <input v-model="name" type="text" />
+        <p v-if="this.name.length > 6">字數大於6</p>
+        <p>你得名子是: {{Update()}}</p>
+        <button type="submit">確認</button>
+        <button type="button" @click="Reset()">清除</button>
+      </form>
+    </div>
+  </body>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          name: "",
+          result: "",
+        };
+      },
+      methods: {
+        Update() {
+          this.result = this.name.slice(0, 6);
+          return this.result;
+          // if (this.name.length > 6) {
+          //   return result;
+          // }
+          // return this.name;
+        },
+        HandleSubmit() {
+          alert(`Submitted Name: ${this.result}`);
+        },
+        Reset() {
+          this.name = "";
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

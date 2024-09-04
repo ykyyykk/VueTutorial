@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        請選擇:
+        <select v-model="lang">
+          <option v-for="n in dropdownLangOptions" :value="n.val">
+            {{ n.name}}
+          </option>
+        </select>
+      </p>
+
+      <light-box :lang="lang">
+        <template v-slot:default="{ hello }">
+          {{ dropdownLangOptions.find(d=>d.val === lang)["name"]}} {{hello}}
+        </template>
+      </light-box>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          dropdownLangOptions: [
+            { name: "繁中", val: "tw" },
+            { name: "日語", val: "jp" },
+            { name: "英文", val: "en" },
+          ],
+          lang: "tw",
+        };
+      },
+    });
+
+    app.component("light-box", {
+      template: `
+    <div class="lightbox">
+      <div class="modal-mask">
+        <div class="modal-container">
+          <div class="modal-body">
+            <main>
+              <slot name="default" v-bind:hello="helloString[lang]"></slot>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    `,
+      props: {
+        lang: {
+          type: String,
+          default: "tw",
+        },
+      },
+      data() {
+        return {
+          helloString: {
+            tw: "twwwwww",
+            jp: "jpppppp",
+            en: "ennnnnn",
+          },
+        };
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</html>

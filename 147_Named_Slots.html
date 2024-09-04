@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <light-box>
+        <!-- 這邊取代底下的 slot name="header" -->
+        <!-- <template v-slot:header>
+          <h2>008JS</h2>
+        </template> -->
+        <!-- 效果等同於v-slot:header 擇一使用-->
+        <template #header>
+          <h1>adaslkdjaslkdjlasjdl</h1>
+        </template>
+
+        <!-- 這邊取代底下的 slot name="footer" -->
+        <template v-slot:footer>
+          <h2>大家快來買</h2>
+        </template>
+
+        <!-- 這邊取代底下的 Default Main -->
+        <div>
+          <a href="..." target="_blank">購書傳送門</a>
+        </div>
+      </light-box>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({});
+
+    app.component("light-box", {
+      template: `
+    <div class="lightbox">
+      <div class="modal-mask" :style="modalStyle">
+        <div class="modal-container">
+          <div class="modal-body">
+            <header>
+              <slot name="header">Default Header</slot>
+            </header>
+            <hr />
+            <main>
+              <slot>Default Main</slot>
+            </main>
+            <hr />
+            <footer>
+              <slot name="footer">Default Footer</slot>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <button @click="isShow = !isShow">ClickMe</button>
+    </div>
+    `,
+      data: () => ({ isShow: false }),
+      computed: {
+        modalStyle() {
+          console.log(this.isShow);
+          return {
+            display: this.isShow ? "" : "none",
+          };
+        },
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</html>

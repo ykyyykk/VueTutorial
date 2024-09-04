@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <label v-for="opt in options">
+        <input type="radio" :value="opt" v-model="dynamic_slot_name" />{{ opt }}
+      </label>
+
+      <light-box>
+        <template v-slot:[dynamic_slot_name]>
+          <h2>sadoijasldjlsadjlasdjkjksajldkjlsa</h2>
+        </template>
+      </light-box>
+    </div>
+  </body>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          options: ["header", "footer", "default"],
+          dynamic_slot_name: "header",
+        };
+      },
+    });
+
+    app.component("light-box", {
+      template: `
+    <div class="lightbox">
+      <div class="modal-mask">
+        <div class="modal-container">
+          <div class="modal-body">
+            <header>
+              <slot name="header">Default Header</slot>
+            </header>
+            <hr />
+            <main>
+              <slot>Default Main</slot>
+            </main>
+            <hr />
+            <footer>
+              <slot name="footer">Default Footer</slot>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <button @click="isShow = !isShow">ClickMe</button>
+    </div>
+    `,
+    });
+
+    app.mount("#app");
+  </script>
+</html>
